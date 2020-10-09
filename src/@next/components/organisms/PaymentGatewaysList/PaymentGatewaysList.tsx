@@ -65,7 +65,37 @@ const PaymentGatewaysList: React.FC<IProps> = ({
               </div>
             );
 
-          case PROVIDERS.DUMMY.label:
+          case PROVIDERS.BITS.label:
+            return (
+              <div key={index}>
+                <S.Tile checked={checked}>
+                  <Radio
+                    data-cy="checkoutPaymentGatewayBitsInput"
+                    name="payment-method"
+                    value="dummy"
+                    checked={checked}
+                    onChange={() =>
+                      selectPaymentGateway && selectPaymentGateway(id)
+                    }
+                    customLabel={true}
+                  >
+                    <span data-cy="checkoutPaymentGatewayBitsName">
+                      {name}
+                    </span>
+                  </Radio>
+                </S.Tile>
+                {checked && (
+                  <DummyPaymentGateway
+                    formRef={formRef}
+                    formId={formId}
+                    processPayment={token => processPayment(id, token)}
+                    initialStatus={selectedPaymentGatewayToken}
+                  />
+                )}
+              </div>
+            );
+
+            case PROVIDERS.DUMMY.label:
             return (
               <div key={index}>
                 <S.Tile checked={checked}>
@@ -94,6 +124,7 @@ const PaymentGatewaysList: React.FC<IProps> = ({
                 )}
               </div>
             );
+
 
           case PROVIDERS.STRIPE.label:
             return (
